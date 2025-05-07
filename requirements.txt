@@ -1,0 +1,7 @@
+transformers==4.49.0
+loguru==0.7.3
+tqdm==4.67.1
+numpy==1.26.4
+torch==2.5.1
+torchaudio==2.5.1
+torchvision==0.20.1
