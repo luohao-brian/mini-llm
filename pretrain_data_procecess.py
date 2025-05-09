@@ -7,12 +7,10 @@ from concurrent.futures import ProcessPoolExecutor
 from tqdm import tqdm
 import random
 
-print("import done.")
 tokenizer = Qwen2Tokenizer.from_pretrained("Qwen/Qwen-tokenizer")
 max_seq_length = 32768
 
 BASE_PATH = pathlib.Path("./")
-print(BASE_PATH)
 BASE_PRETRAIN_DATA_DIR = BASE_PATH / "pretrain_data"
 
 if not BASE_PRETRAIN_DATA_DIR.exists():
