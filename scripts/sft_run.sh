@@ -1,0 +1,1 @@
+accelerate launch --multi_gpu  --config_file scripts/accelerate_config/single_node_multi_gpu_fsdp.yaml ./sft.py --model_path ./output/pretain/qwen_0.12B --tokenizer_path ./output/pretain/qwen_0.12B --dataset_path ./input/sft-data --output_dir ./output/sft/qwen_0.12B --max_length 1024
