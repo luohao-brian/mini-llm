@@ -1,0 +1,2 @@
+#!/usr/bin/bash
+accelerate launch --multi_gpu  --config_file scripts/accelerate_config/single_node_multi_gpu_fsdp.yaml dpo.py --model_path ./output/sft/qwen_0.12B --tokenizer_path ./output/sft/qwen_0.12B --dataset_path ./input/dpo-data --output_dir ./output/dpo/qwen_0.12B --max_length 1024
