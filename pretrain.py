@@ -50,7 +50,8 @@ train_args = TrainingArguments(
     save_steps=1000,  # 每 1000 步保存一次模型
     logging_steps=100,  # 添加日志步骤以便观察进度
     save_safetensors=True,
-    max_steps=10000  # 指定最大训练步数，可根据需求调整
+    max_steps=10000,  # 指定最大训练步数，可根据需求调整
+    report_to="wandb", #wandb 监控
 )
 
 trainer = Trainer(
