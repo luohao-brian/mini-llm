@@ -26,6 +26,7 @@ training_args = DPOConfig(
     save_strategy="epoch",
     logging_steps=100,  # 添加日志步骤以便观察进度
     save_safetensors=True,
+    report_to="wandb", #wandb 监控
     )
 trainer = DPOTrainer(model=model, args=training_args, processing_class=tokenizer, train_dataset=dataset)
 trainer.train()
