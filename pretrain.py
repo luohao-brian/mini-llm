@@ -53,6 +53,8 @@ train_args = TrainingArguments(
     max_steps=10000,  # 指定最大训练步数，可根据需求调整
     report_to="wandb", #wandb 监控
 )
+# wandb input, 2) api key
+# https://blog.csdn.net/qq_62231627/article/details/136949757
 
 trainer = Trainer(
     model,
