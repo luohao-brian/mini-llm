@@ -27,6 +27,7 @@ training_args = SFTConfig(
     save_strategy="epoch",
     logging_steps=100,  # 添加日志步骤以便观察进度
     save_safetensors=True,
+    report_to="wandb", #wandb 监控
 )
 
 trainer = SFTTrainer(
