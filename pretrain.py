@@ -33,15 +33,18 @@ else:
     config = Qwen2Config.from_json_file(args.model_path)
     model = Qwen2ForCausalLM(config)
 
-dataset = load_dataset("./input/wikipedia-cn-20230720-filtered", split="train", streaming=True)
+# dataset = load_dataset("./input/wikipedia-cn-20230720-filtered", split="train", streaming=True)
 
-dataset = load_dataset("./input/wikipedia-cn-20230720-filtered", split="train")
-dataset = dataset.select(range(100)) #截断数据集调试
+# dataset = load_dataset("./input/wikipedia-cn-20230720-filtered", split="train")
+# dataset = dataset.select(range(100)) #截断数据集调试
+# config = Qwen2Config.from_json_file(args.model_path)
+# model = Qwen2ForCausalLM(config)
+dataset = load_dataset("./input/SkyPile-150B", split="train", streaming=True)
 tokenizer = Qwen2Tokenizer.from_pretrained(args.tokenizer_path)
 
 def tokenize_function(example):
     # 添加 padding 参数，将样本填充到最大长度
-    tokenized_inputs = tokenizer(example["completion"], truncation=True, max_length=4096, padding="max_length")
+    tokenized_inputs = tokenizer(example["text"], truncation=True, max_length=4096, padding="max_length")
     # 为因果语言模型将 labels 设置为与 input_ids 相同
     tokenized_inputs["labels"] = tokenized_inputs["input_ids"].copy()
     return tokenized_inputs
@@ -49,7 +52,7 @@ def tokenize_function(example):
 tokenized_dataset = dataset.map(tokenize_function,
                                 batched=True,
                                 # num_proc=multiprocessing.cpu_count(),  # 开启流式数据，不能指定 num_proc
-                                remove_columns=["completion", "source"]
+                                remove_columns=["text"],
                                 )
 dataset = dataset.select(range(100)) #截断数据集调试
 
@@ -78,3 +81,4 @@ trainer = Trainer(
 trainer.train()
 trainer.save_model(output_dir=args.output_dir)
 tokenizer.save_pretrained(save_directory = args.output_dir)
+
