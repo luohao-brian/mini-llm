@@ -19,16 +19,26 @@ huggingface-cli download --repo-type dataset --resume-download stanfordnlp/imdb 
 huggingface-cli download --repo-type dataset --resume-download trl-lib/ultrafeedback_binarized --local-dir ./input/dpo-data 
 ```
 
+下载Qwen2.5-3B作为checkpoint base model
+
+```
+huggingface-cli download Qwen/Qwen2.5-3B --local-dir ./input/Qwen2.5-3B/
+```
+
 Pretrain
 
 ```
-python ./pretrain.py --model_path ./models/qwen_0.12B.config  --tokenizer_path ./input/Qwen-tokenizer --dataset_path ./pretrain_data/wiki_pretrain.npy --output_dir ./output/pretain/qwen_0.12B --max_length 1024
+python ./pretrain.py --from_ckpt True --model_path ./models/qwen_0.12B.config  --tokenizer_path ./input/Qwen-tokenizer --dataset_path ./input/wikipedia-cn-20230720-filtered --output_dir ./output/pretain/qwen_0.12B --max_length 1024
+```
+
+```
+bash ./scripts/pretrain_ckpt.sh 
 ```
 
 SFT
 
 ```
-python ./sft.py --model_path ./output/pretain/qwen_0.12B --tokenizer_path ./output/pretain/qwen_0.12B --dataset_path ./input/sft-data --output_dir ./output/sft/qwen_0.12B --max_length 1024
+python ./sft.py --model_path ./output/pretain/qwen_0.12B --tokenizer_path ./output/pretain/qwen_0.12B --dataset_path ./input/sft-data --output_dir ./output/sft/qwen_0.12B --max_length 1024 
 ```
 
 ```
@@ -49,5 +59,17 @@ python ./dpo.py --model_path ./output/sft/qwen_0.12B --tokenizer_path ./output/s
 
 ```
 Sliding Window Attention is enabled but not implemented for `sdpa`; unexpected results may be encountered.
+```
+
+example
+
+```
+python ./chat_example.py --model_path ./output/pretain/qwen_0.12B --tokenizer_path ./input/Qwen-tokenizer 
+```
+
+Project Wanda API Key
+
+```
+e7d828cb3382249340d3d1d480acdac7444c0721
 ```
 

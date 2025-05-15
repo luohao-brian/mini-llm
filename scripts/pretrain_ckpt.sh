@@ -1,0 +1,1 @@
+accelerate launch --multi_gpu  --config_file scripts/accelerate_config/default_config.yaml  pretrain.py --from_ckpt True --model_path ./input/Qwen2.5-3B/ --tokenizer_path ./input/Qwen-tokenizer --dataset_path ./input/wikipedia-cn-20230720-filtered --output_dir ./output/pretain/Qwen2.5-3B --max_length 1024
