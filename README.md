@@ -32,7 +32,7 @@ python ./pretrain.py --from_ckpt True --model_path ./models/qwen_0.12B.config  -
 ```
 
 ```
-bash ./scripts/pretrain_run.sh 
+bash ./scripts/pretrain_ckpt.sh 
 ```
 
 SFT
