@@ -1,0 +1,20 @@
+accelerate==1.5.2                                                                                         
+deepspeed==0.16.7
+loguru==0.7.3
+numpy==1.26.4
+pandas==2.2.3                                                                                             
+pyarrow==20.0.0                                                                                           
+tokenizers==0.21.1                                                                                        
+# torchvision==0.20.1                                                                                     
+torchvision==0.21.0                                                                                       
+tqdm==4.67.1
+# transformers==4.49.0                                                                                      
+transformers==4.51.1
+trl==0.17.0
+wandb>=0.19.1
+# torch==2.5.1
+torch==2.6.0
+liger-kernel>=0.5.6
+math-verify==0.5.2                                                                                        
+latex2sympy2_extended>=1.0.6
+vllm==0.8.4

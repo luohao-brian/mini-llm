@@ -3,3 +3,13 @@ output
 pretrain_data
 test
 wandb
+post_train_v2/cache
+post_train_v2/data
+post_train_v2/DeepSeek-R1-Distill-Qwen-1.5B
+post_train_v2/Math-220k
+post_train_v2/Qwen2.5-1.5B-Instruct
+post_train_v2/venv
+post_train_v2/wandb
+post_train_v2/recipes/__pycache__
+post_train_v2/recipes/utils/__pycache__
+
