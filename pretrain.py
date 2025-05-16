@@ -16,6 +16,7 @@ from transformers import Qwen2Tokenizer
 # print(f"Using device: {device}")
 
 parser = argparse.ArgumentParser(description='DPO Training Script')
+parser.add_argument('--from_ckpt', type=bool, required=True, help='start train from ckpt')
 parser.add_argument('--model_path', type=str, required=True, help='Path to model config')
 parser.add_argument('--tokenizer_path', type=str, required=True, help='Path to tokenizer dataset')
 parser.add_argument('--dataset_path', type=str, required=True, help='Path to training dataset')
@@ -24,8 +25,20 @@ parser.add_argument('--max_length', type=int, required=True, help='input max_len
 args = parser.parse_args()
 
 # 直接加载原始配置，**去除所有滑动窗口相关的修改代码**
-config = Qwen2Config.from_json_file(args.model_path)
-model = Qwen2ForCausalLM(config)
+# from config
+if args.from_ckpt:
+    model = Qwen2ForCausalLM.from_pretrained(args.model_path)
+else:
+# from base model
+    config = Qwen2Config.from_json_file(args.model_path)
+    model = Qwen2ForCausalLM(config)
+
+# dataset = load_dataset("./input/wikipedia-cn-20230720-filtered", split="train", streaming=True)
+
+# dataset = load_dataset("./input/wikipedia-cn-20230720-filtered", split="train")
+# dataset = dataset.select(range(100)) #截断数据集调试
+# config = Qwen2Config.from_json_file(args.model_path)
+# model = Qwen2ForCausalLM(config)
 dataset = load_dataset("./input/SkyPile-150B", split="train", streaming=True)
 tokenizer = Qwen2Tokenizer.from_pretrained(args.tokenizer_path)
 
@@ -41,6 +54,7 @@ tokenized_dataset = dataset.map(tokenize_function,
                                 # num_proc=multiprocessing.cpu_count(),  # 开启流式数据，不能指定 num_proc
                                 remove_columns=["text"],
                                 )
+dataset = dataset.select(range(100)) #截断数据集调试
 
 train_args = TrainingArguments(
     output_dir=args.output_dir,
@@ -50,7 +64,8 @@ train_args = TrainingArguments(
     save_steps=1000,  # 每 1000 步保存一次模型
     logging_steps=100,  # 添加日志步骤以便观察进度
     save_safetensors=True,
-    max_steps=10000,  # 指定最大训练步数，可根据需求调整
+    num_train_epochs = 1,
+    # max_steps=10000,  # 指定最大训练步数，可根据需求调整 epoch
     report_to="wandb", #wandb 监控
 )
 # wandb input, 2) api key
